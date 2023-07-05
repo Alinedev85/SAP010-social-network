@@ -1,5 +1,6 @@
 import './feed.css';
-import { publicações } from '../../configFirebase/post.js';
+import { publicações, retornoPublicação } from '../../configFirebase/post.js';
+
 
 export default () => {
 
@@ -48,12 +49,17 @@ export default () => {
 
   btnPostagem.addEventListener('click', async () => {
     const mensagem = container.querySelector('#areaMensagem').value;
-    
-    if (mensagem.length > 0){
-      await publicações()
+
+    if (mensagem.length > 0) {
+      await publicações(mensagem);
     } else {
-      alert ("Digite sua mensagem!")
-    }});
-    
+      alert("Digite sua mensagem!");
+    }
+  });
+
+
+  //mostrar post 
+
+
   return container;
 };
