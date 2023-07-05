@@ -115,20 +115,13 @@ a:hover{
   padding: 10px;
 }
 
-.btnPostagem img{
-  width: 30px;
-}
-
 .btnPostagem{
-  align-self: flex-end;
-  background: none;
-  width: 50px;
-  position: absolute;
-  top: 320px;
+  width: 470px;
 }
 
 .btnPostagem:hover{
-  background: var(--light-white);
+  background: var(--grey);
+  color: var(--intense-brown);
 }
 
 .logo{
@@ -139,10 +132,6 @@ a:hover{
   .container{
     display: flex;
     gap: 15px;
-  }
-
-  .btnPostagem{
-    top: 785px;
   }
 
   .fundo{
@@ -164,104 +153,25 @@ a:hover{
     color: var(--intense-brown);
     font-size: 18px;
   }
-}
 
-/* .convite {
-  margin-top: -80px;
-  margin-left: -190px;
-}
+  .menu{
+    width: 400px;
+    height: 100px;
+    margin: 0;
+  }
 
-li {
-  margin-top: 25px;
-  margin-left: -170px;
-}
+  .filtros{
+    width: 400px;
+    height: 100px;
+    gap: 0;
+  }
 
-.logo-cs {
-  width: 500px;
-  margin-top: 1px;
-}
+  ul{
+    list-style: none;
+  }
 
-.logoCsFeed {
-  position: relative;
-  top: 2px;
-  right: -150px;
-  width: 700px;
-  margin-left: -90px;
+  .inputMensagem{
+    width: 450px;
+    height: 150px;
+  }
 }
-
-.fulana {
-  margin-top: -150px;
-  margin-left: -40px;
-}
-
-.logout {
-  margin-top: 180px;
-  margin-left: -10px;
-  width: 80px;
-}
-
-.box {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-column-gap: 1px;
-  text-align: left;
-}
-
-.container2 {
-  grid-column: 3 / 3;
-  background-color: var(--intense-brown);
-  box-shadow: 12px 15px 8px -9px var(--medium-brown);
-  border: none;
-  border-radius: 10px;
-  padding: 25px;
-  margin-top: 50px;
-  width: 350px;
-  height: 500px;
-}
-
-.acesseTbm {
-  margin-top: -400px;
-  margin-left: -20px;
-}
-
-a {
-  font-size: 25px;
-}
-
-.usuario {
-  grid-column: 3 / 3;
-  background-color: var(--intense-brown);
-  box-shadow: 12px 15px 8px -9px var(--medium-brown);
-  border: none;
-  border-radius: 10px;
-  padding: 25px;
-  margin-top: 50px;
-  width: 350px;
-  height: 200px;
-}
-
-.postagens {
-  position: relative;
-  top: -100%;
-  right: -290px;
-  background-color: var(--medium-brown);
-  box-shadow: 12px 15px 8px -9px var(--medium-brown);
-  border: none;
-  border-radius: 10px;
-  width: 800px;
-  height: 600px;
-}
-
-.inputPostagem {
-  width: 650px;
-  margin-top: -300px;
-}
-
-.btnPostagem {
-  height: 40px;
-  margin-left: 20px;
-}
-
-ul {
-  list-style-image: url('../../images/saco-de-cafe.png');
-} */
