@@ -9,7 +9,7 @@ import {
 } from 'firebase/auth';
 
 import {
-  app, db, collection, getDocs, addDoc,
+  app, db, collection, getDocs,
 } from './configFirebase.js';
 
 // login google
