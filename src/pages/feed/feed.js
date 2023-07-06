@@ -1,6 +1,7 @@
 import './feed.css';
 import { publicações, retornoPublicacoes } from '../../configFirebase/post.js';
 
+
 export default () => {
   const container = document.createElement('div');
 
@@ -30,22 +31,19 @@ export default () => {
           <img class="fundo" src="./images/background-filtros.png">
         </section>
      
+       
         <div class="postagens">
          <textarea class="inputMensagem" id="areaMensagem" placeholder="Compartilhe ideias e informações sobre café"></textarea>
          <button class="btnPostagem" id="postagemID">Postar</button>
          </div>
 
-         <div class="postagem">
-        </div>
+         <section id="postagem" class="postagemFeed">
+         </section> 
 
-      </div>
+
   `;
 
   container.innerHTML = template;
-
-  const mostrarPublicacao = `
-  <div id="postagem"></div>
-  `;
 
   const btnPostagem = container.querySelector('#postagemID');
 
@@ -54,8 +52,24 @@ export default () => {
 
     if (mensagem.length > 0) {
       await publicações(mensagem);
-      container.innerHTML += mostrarPublicacao;
-      retornoPublicacoes(mensagem);
+      container.querySelector('#areaMensagem').value = ''; 
+      const publicacoes = await retornoPublicacoes();
+      const postagem = container.querySelector('#postagem');
+      postagem.innerHTML = "";
+
+      if (publicacoes.length > 0) {
+        publicacoes.forEach((post) => {
+          const publicar = document.createElement('div');
+          publicar.innerHTML = ` 
+            <section class='conteudo'>
+              <h3 class='nome'> ${post.name}</h3>
+              <p class='conteudoPag'> ${post.msg}</p>
+             
+            </section> `;
+  
+          postagem.appendChild(publicar);
+        });
+      }
     } else {
       alert('Digite sua mensagem!');
     }
@@ -63,3 +77,4 @@ export default () => {
 
   return container;
 };
+

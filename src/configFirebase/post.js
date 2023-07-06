@@ -2,9 +2,8 @@ import {
   collection, db, auth, addDoc, getDocs,
 } from './configFirebase.js';
 
-// criar postagem de usuarios/ id automatico
 export const publicações = async (mensagem) => {
-  const document = await addDoc(collection(db, 'Post'), {
+  const document = await addDoc(collection(db, 'post'), {
     name: auth.currentUser.displayName,
     author: auth.currentUser.uid,
     msg: mensagem,
@@ -14,8 +13,12 @@ export const publicações = async (mensagem) => {
 };
 
 export const retornoPublicacoes = async () => {
-  const publicacao = await getDocs(collection(db, 'Post'));
-  publicacao.forEach((mensagem) => {
-    console.log(mensagem.data());
+  const publicacoes = [];
+  const querySnapshot = await getDocs(collection(db, 'post'));
+
+  querySnapshot.forEach((post) => {
+    publicacoes.push({ ...post.data(), id: post.id });
   });
+
+  return publicacoes;
 };
