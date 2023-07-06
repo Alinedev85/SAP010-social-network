@@ -2,8 +2,10 @@ import {
   collection, db, auth, addDoc, getDocs,
 } from './configFirebase.js';
 
+
+
 export const publicações = async (mensagem) => {
-  const document = await addDoc(collection(db, 'post'), {
+  const document = await addDoc(collection(db, 'Post'), {
     name: auth.currentUser.displayName,
     author: auth.currentUser.uid,
     msg: mensagem,
@@ -14,7 +16,7 @@ export const publicações = async (mensagem) => {
 
 export const retornoPublicacoes = async () => {
   const publicacoes = [];
-  const querySnapshot = await getDocs(collection(db, 'post'));
+  const querySnapshot = await getDocs(collection(db, 'Post'));
 
   querySnapshot.forEach((post) => {
     publicacoes.push({ ...post.data(), id: post.id });
