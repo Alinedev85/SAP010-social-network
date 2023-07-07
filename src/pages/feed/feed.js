@@ -52,29 +52,41 @@ export default () => {
 
     if (mensagem.length > 0) {
       await publicações(mensagem);
-      container.querySelector('#areaMensagem').value = ''; 
-      const publicacoes = await retornoPublicacoes();
-      const postagem = container.querySelector('#postagem');
-      postagem.innerHTML = "";
-
-      if (publicacoes.length > 0) {
-        publicacoes.forEach((post) => {
-          const publicar = document.createElement('div');
-          publicar.innerHTML = ` 
-            <section class='conteudo'>
-              <h3 class='nome'> ${post.name}</h3>
-              <p class='conteudoPag'> ${post.msg}</p>
-             
-            </section> `;
-  
-          postagem.appendChild(publicar);
-        });
-      }
+      container.querySelector('#areaMensagem').value = '';
+      mostrarPostagem();
     } else {
       alert('Digite sua mensagem!');
     }
   });
 
-  return container;
-};
+  async function mostrarPostagem() {
+    const publicacoes = await retornoPublicacoes();
+    const postagem = container.querySelector('#postagem');
+    postagem.innerHTML = "";
 
+    if (publicacoes.length > 0) {
+      publicacoes.forEach((post) => {
+        const publicar = document.createElement('div');
+        publicar.innerHTML = ` 
+          <section class='conteudo'>
+            <h3 class='nome'> ${post.name}</h3>
+            <p class='conteudoPag'> ${post.msg}</p>
+            <div class='botoes'>
+              <button class='botaoCurtir'>Curtir</button>
+              <button class='botaoComentar'>Comentar</button>
+            </div>
+          </section> `;
+
+        postagem.appendChild(publicar);
+      });
+    }
+
+  };
+
+
+
+  mostrarPostagem();
+
+  return container;
+
+};
