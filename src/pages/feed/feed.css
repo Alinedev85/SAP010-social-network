@@ -1,20 +1,24 @@
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 100px 1fr 1fr;
+  grid-template-rows: 100px 300px 1fr 1fr;
   grid-template-areas: "logo logo"
                         "postagens menu"
-                        "postagens filtros";
+                        "postagem menu"
+                        "postagem filtros";
   grid-column-gap: 100px;
+  height: 60vh;
 }
 
-.menu, .filtros{
+.menu, .filtros, .postagens, .postagemFeed{
   display: flex;
   flex-direction: column;
 }
 
 .menu{
   grid-area: menu;
+  grid-row: 2/2;
+  margin-top: 100px;
   width: 430px;
   height: 301px;
   border-radius: 10px;
@@ -72,6 +76,8 @@ a:hover{
 
 .filtros{
   grid-area: filtros;
+  grid-row: 2/2;
+  margin-top: 800px;
   width: 430px;
   height: 301px;
   background: var(--grey);
@@ -90,10 +96,8 @@ a:hover{
 
 .postagens{
   grid-area: postagens;
-  grid-row: 2/3;
+  grid-row-start: 2;
   border-radius: 10px;
-  display: flex;
-  flex-direction: column;
   box-shadow: 12px 15px 8px -9px var(--light-brown);
 }
 
@@ -116,12 +120,30 @@ a:hover{
 }
 
 .btnPostagem{
-  width: 470px;
+  width: 520px;
 }
 
 .btnPostagem:hover{
   background: var(--grey);
   color: var(--intense-brown);
+}
+
+.postagemFeed{
+  margin-top: 8px;
+  width: 520px;
+  height: 56vh;
+  border-radius: 10px;
+  gap: 12px;
+  overflow-y: scroll;
+}
+
+.conteudo{
+  border-radius: 10px;
+  /* border: 5px solid var(--light-brown); */
+  min-height: 150px;
+  max-height: 200px;
+  width: 520px;
+  box-shadow: 12px 15px 8px -9px var(--light-brown);
 }
 
 .logo{
