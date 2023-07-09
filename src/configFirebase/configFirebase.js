@@ -1,5 +1,5 @@
 // Firebase configuration
-import { getFirestore, collection, getDocs, addDoc} from 'firebase/firestore';
+import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore';
 
 import { initializeApp } from 'firebase/app';
 // https://firebase.google.com/docs/web/setup#available-libraries

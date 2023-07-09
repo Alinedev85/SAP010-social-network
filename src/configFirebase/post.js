@@ -5,11 +5,14 @@ import {
 
 
 export const publicações = async (mensagem) => {
+  const timestamp = new Date().getTime();
+
   const document = await addDoc(collection(db, 'Post'), {
     name: auth.currentUser.displayName,
     author: auth.currentUser.uid,
     msg: mensagem,
     likes: [],
+    timestamp: timestamp,
   });
   return document;
 };
