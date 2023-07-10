@@ -6,6 +6,7 @@
 import {
   getAuth, createUserWithEmailAndPassword,
   signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile,
+  signOut,
 } from 'firebase/auth';
 
 import {
@@ -39,6 +40,13 @@ export const createUserWithEmail = (name, email, senha) => {
 export const loginWithEmail = (email, password) => {
   const auth = getAppAuth();
   return signInWithEmailAndPassword(auth, email, password);
+};
+
+export const singOut = () => {
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    window.location.hash = '#login';
+  });
 };
 
 // id do usuario no firebase

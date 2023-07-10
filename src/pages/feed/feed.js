@@ -1,5 +1,6 @@
 import './feed.css';
 import { publicações, retornoPublicacoes } from '../../configFirebase/post.js';
+import { singOut } from '../../configFirebase/auth.js';
 
 export default () => {
   const container = document.createElement('div');
@@ -11,7 +12,7 @@ export default () => {
     </div>
 
     <section class="menu">
-      <h2 class="saudacao">Olá, <span id="nome-usuario">fulaninho(a)</span>!</h2>
+      <h2 class="saudacao">Olá, <span id="nome-usuario">fulaninho</span>!</h2>
       <h3 class="convite">Possui um convite? Acesse:</h3>
       <ul>
         <li><a href="#cafeComRum">Café com Rum</a></li>
@@ -40,6 +41,9 @@ export default () => {
   container.innerHTML = template;
 
   const btnPostagem = container.querySelector('#postagemID');
+  const btnDeslogar = container.querySelector('#logoutButton');
+
+  btnDeslogar.addEventListener('click', singOut);
 
   btnPostagem.addEventListener('click', async () => {
     const mensagem = container.querySelector('#areaMensagem').value;
