@@ -56,7 +56,7 @@ export default () => {
   async function mostrarPostagem() {
     const publicacoes = await retornoPublicacoes();
     const postagem = container.querySelector('#postagem');
-    postagem.innerHTML = "";
+    postagem.innerHTML = '';
 
     // NaN = "Not-a-Number"
     const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
@@ -74,7 +74,7 @@ export default () => {
         publicar.innerHTML = ` 
           <section class='conteudo'>
             <div class='nome-data'>
-              <h3 class='nome'> ${post.name}</h3>
+              <h4 class='nome'> ${post.name}</h3>
               <p class='timestamp'> ${dataFormatada}</p>
             </div>
             <p class='conteudoPag'> ${post.msg}</p>
@@ -87,8 +87,6 @@ export default () => {
         postagem.appendChild(publicar);
       });
     }
-
-
   }
 
   mostrarPostagem();
