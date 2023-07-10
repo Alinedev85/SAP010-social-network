@@ -43,23 +43,18 @@ export default () => {
 
   btnPostagem.addEventListener('click', async () => {
     const mensagem = container.querySelector('#areaMensagem').value;
-
     if (mensagem.length > 0) {
       await publicações(mensagem);
       container.querySelector('#areaMensagem').value = '';
-      await mostrarPostagem();
-    } else {
-      alert('Digite sua mensagem!');
     }
   });
 
   async function mostrarPostagem() {
     const publicacoes = await retornoPublicacoes();
     const postagem = container.querySelector('#postagem');
-    postagem.innerHTML = "";
+    postagem.innerHTML = '';
 
-    // NaN = "Not-a-Number"
-    const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
+    const postagensValidas = publicacoes.filter((post) => !Number(post.timestamp));
 
     postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
 
@@ -87,8 +82,6 @@ export default () => {
         postagem.appendChild(publicar);
       });
     }
-
-
   }
 
   mostrarPostagem();
