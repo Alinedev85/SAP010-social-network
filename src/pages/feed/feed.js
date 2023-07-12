@@ -1,10 +1,7 @@
 import './feed.css';
 import { publicações, retornoPublicacoes, likePost } from '../../configFirebase/post.js';
-import { auth } from '../../configFirebase/configFirebase.js';
-
-import { publicações, retornoPublicacoes } from '../../configFirebase/post.js';
 import { singOut } from '../../configFirebase/auth.js';
-
+import { auth } from '../../configFirebase/configFirebase.js';
 
 export default () => {
   const container = document.createElement('div');
@@ -70,10 +67,11 @@ export default () => {
 
     // NaN = "Not-a-Number"
     const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
-    const likeButton = container.querySelector('.btn-like');
-    const likeCountElement = container.querySelector('.likeCount');
 
     postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
+
+    const likeButton = container.querySelector('.btn-like');
+    const likeCountElement = container.querySelector('.likeCount');
 
     if (postagensValidas.length > 0) {
       postagensValidas.forEach((post) => {
@@ -91,11 +89,11 @@ export default () => {
             </div>
             <p class='conteudoPag'> ${post.msg}</p>
             <div class='botoes'>
-              <button class='botaoCurtir'>Editar</button>
-              <button class='botaoExtra'>Deletar</button>
-              <a class='btn-like${post.like && post.like.includes(auth.currentUser.uid) ? ' liked' : ''}' data-comment-id='${post.id}'>☕️</a>
-              <span class="likeCount">${post.likeCount}</span>
-              ${post.name === auth.currentUser.displayName}
+            <button class='botaoCurtir'>Editar</button>
+            <button class='botaoExtra'>Deletar</button>
+            <a class='btn-like${post.like && post.like.includes(auth.currentUser.uid) ? ' liked' : ''}' data-comment-id='${post.id}'>☕️</a>
+            <span class="likeCount">${post.likeCount}</span>
+            ${post.name === auth.currentUser.displayName}
             </div>
           </section>`;
 
@@ -113,14 +111,14 @@ export default () => {
         likeButton.classList.remove('liked');
         likeButton.textContent = '❤️';
         likeCountElement.textContent = parseInt(likeCountElement.textContent, 10) - 1;
-        //console.log(likeButton.addEventListener);
+        // console.log(likeButton.addEventListener);
       } else {
         likeButton.classList.add('liked');
         likeButton.textContent = '☕️';
         likeCountElement.textContent = parseInt(likeCountElement.textContent, 10) + 1;
-        //console.log(likeButton.addEventListener);
+        // console.log(likeButton.addEventListener);
       }
-    })
+    });
   }
 
   mostrarPostagem();
