@@ -33,6 +33,7 @@ export default () => {
     <div class="postagens">
       <textarea class="inputMensagem" id="areaMensagem" placeholder="Compartilhe ideias e informações sobre café"></textarea>
       <button class="btnPostagem" id="postagemID">Postar</button>
+      <div id="mensagemErro" class="error"></div>
     </div>
 
     <section id="postagem" class="postagemFeed"></section> 
@@ -45,26 +46,28 @@ export default () => {
 
   btnDeslogar.addEventListener('click', singOut);
 
-  btnPostagem.addEventListener('click', async () => {
-    const mensagem = container.querySelector('#areaMensagem').value;
-    if (mensagem.length > 0) {
-      await publicações(mensagem);
-      container.querySelector('#areaMensagem').value = '';
-    }
-  });
-
   async function mostrarPostagem() {
     const publicacoes = await retornoPublicacoes();
     const postagem = container.querySelector('#postagem');
     postagem.innerHTML = '';
 
-    const postagensValidas = publicacoes.filter((post) => !Number(post.timestamp));
-
-    postagensValidas.sort((a, b) => {
-      const timestampA = a.timestamp || 0;
-      const timestampB = b.timestamp || 0;
-      return timestampB - timestampA;
+    btnPostagem.addEventListener('click', async () => {
+      const mensagem = container.querySelector('#areaMensagem').value;
+      const mensagemErro = container.querySelector('#mensagemErro');
+      if (mensagem.length > 0) {
+        await publicações(mensagem);
+        container.querySelector('#areaMensagem').value = '';
+        await mostrarPostagem();
+        mensagemErro.textContent = '';
+      } else {
+        mensagemErro.textContent = 'Digite sua mensagem!';
+      }
     });
+
+    // NaN = "Not-a-Number"
+    const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
+
+    postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
 
     if (postagensValidas.length > 0) {
       postagensValidas.forEach((post) => {
@@ -91,21 +94,6 @@ export default () => {
       });
     }
   }
-
-  const btnPostagem = container.querySelector('#postagemID');
-
-  btnPostagem.addEventListener('click', async () => {
-    const mensagem = container.querySelector('#areaMensagem').value;
-    const mensagemErro = container.querySelector('#mensagemErro');
-    if (mensagem.length > 0) {
-      await publicações(mensagem);
-      container.querySelector('#areaMensagem').value = '';
-      await mostrarPostagem();
-      mensagemErro.textContent = '';
-    } else {
-      mensagemErro.textContent = 'Digite sua mensagem!';
-    }
-  });
 
   mostrarPostagem();
 
