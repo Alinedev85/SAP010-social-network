@@ -45,6 +45,13 @@ export const loginWithEmail = (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
+export const singOut = () => {
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    window.location.hash = '#login';
+  });
+};
+
 // id do usuario no firebase
 export const getUserId = () => {
   const auth = getAppAuth();
