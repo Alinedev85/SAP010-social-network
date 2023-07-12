@@ -4,12 +4,16 @@
 // getUserId - retorno do id do usuario
 
 import {
-  getAuth, createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile,
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
 } from 'firebase/auth';
 
 import {
-  app, db, collection, getDocs,
+  app,
 } from './configFirebase.js';
 
 // login google
@@ -55,11 +59,4 @@ export const getUserName = () => {
     return user.displayName;
   }
   return null;
-};
-
-export const querySnapshot = async () => {
-  await getDocs(collection(db, 'Post'));
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, ' => ', doc.data());
-  });
 };

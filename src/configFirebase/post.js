@@ -2,8 +2,6 @@ import {
   collection, db, auth, addDoc, getDocs,
 } from './configFirebase.js';
 
-
-
 export const publicações = async (mensagem) => {
   const timestamp = new Date().getTime();
 
@@ -12,11 +10,10 @@ export const publicações = async (mensagem) => {
     author: auth.currentUser.uid,
     msg: mensagem,
     likes: [],
-    timestamp: timestamp,
+    timestamp,
   });
   return document;
 };
-
 
 export const retornoPublicacoes = async () => {
   const publicacoes = [];
