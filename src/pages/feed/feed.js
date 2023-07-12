@@ -2,6 +2,10 @@ import './feed.css';
 import { publicações, retornoPublicacoes, likePost } from '../../configFirebase/post.js';
 import { auth } from '../../configFirebase/configFirebase.js';
 
+import { publicações, retornoPublicacoes } from '../../configFirebase/post.js';
+import { singOut } from '../../configFirebase/auth.js';
+
+
 export default () => {
   const container = document.createElement('div');
 
@@ -12,7 +16,7 @@ export default () => {
     </div>
 
     <section class="menu">
-      <h2 class="saudacao">Olá, <span id="nome-usuario">fulaninho(a)</span>!</h2>
+      <h2 class="saudacao">Olá, <span id="nome-usuario">fulaninho</span>!</h2>
       <h3 class="convite">Possui um convite? Acesse:</h3>
       <ul>
         <li><a href="#cafeComRum">Café com Rum</a></li>
@@ -33,6 +37,7 @@ export default () => {
     <div class="postagens">
       <textarea class="inputMensagem" id="areaMensagem" placeholder="Compartilhe ideias e informações sobre café"></textarea>
       <button class="btnPostagem" id="postagemID">Postar</button>
+      <div id="mensagemErro" class="error"></div>
     </div>
 
     <section id="postagem" class="postagemFeed"></section> 
@@ -41,23 +46,27 @@ export default () => {
   container.innerHTML = template;
 
   const btnPostagem = container.querySelector('#postagemID');
+  const btnDeslogar = container.querySelector('#logoutButton');
 
-  btnPostagem.addEventListener('click', async () => {
-    const mensagem = container.querySelector('#areaMensagem').value;
-
-    if (mensagem.length > 0) {
-      await publicações(mensagem);
-      container.querySelector('#areaMensagem').value = '';
-      await mostrarPostagem();
-    } else {
-      alert('Digite sua mensagem!');
-    }
-  });
+  btnDeslogar.addEventListener('click', singOut);
 
   async function mostrarPostagem() {
     const publicacoes = await retornoPublicacoes();
     const postagem = container.querySelector('#postagem');
-    postagem.innerHTML = "";
+    postagem.innerHTML = '';
+
+    btnPostagem.addEventListener('click', async () => {
+      const mensagem = container.querySelector('#areaMensagem').value;
+      const mensagemErro = container.querySelector('#mensagemErro');
+      if (mensagem.length > 0) {
+        await publicações(mensagem);
+        container.querySelector('#areaMensagem').value = '';
+        await mostrarPostagem();
+        mensagemErro.textContent = '';
+      } else {
+        mensagemErro.textContent = 'Digite sua mensagem!';
+      }
+    });
 
     // NaN = "Not-a-Number"
     const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
@@ -77,7 +86,7 @@ export default () => {
         publicar.innerHTML = ` 
           <section class='conteudo'>
             <div class='nome-data'>
-              <h3 class='nome'> ${post.name}</h3>
+              <h4 class='nome'> ${post.name}</h3>
               <p class='timestamp'> ${dataFormatada}</p>
             </div>
             <p class='conteudoPag'> ${post.msg}</p>
@@ -111,7 +120,7 @@ export default () => {
         likeCountElement.textContent = parseInt(likeCountElement.textContent, 10) + 1;
         //console.log(likeButton.addEventListener);
       }
-    });
+    })
   }
 
   mostrarPostagem();
