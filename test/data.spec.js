@@ -33,6 +33,7 @@ import {
   },
   ];
   
+  
   //mock da captura dos ddados 
   const querySnapshotMock = {
     forEach: (callback) => {
@@ -74,7 +75,7 @@ import {
   signInWithPopup.mockRejectedValueOnce(new Error(errorMessage));
   try {
   await loginGoogle();
-  // Se a função não lançar um erro, falhará no teste
+  // Se a função não lançar um erro falhará no teste
   throw new Error('A função deveria lançar um erro');
   } catch (error) {
   expect(error.message).toBe(errorMessage);
