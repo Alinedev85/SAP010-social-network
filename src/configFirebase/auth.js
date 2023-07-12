@@ -6,10 +6,11 @@
 import {
   getAuth, createUserWithEmailAndPassword,
   signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile,
+  signOut,
 } from 'firebase/auth';
 
 import {
-  app, db, collection, getDocs,
+  app,
 } from './configFirebase.js';
 
 // login google
@@ -41,6 +42,13 @@ export const loginWithEmail = (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
+export const singOut = () => {
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    window.location.hash = '#login';
+  });
+};
+
 // id do usuario no firebase
 export const getUserId = () => {
   const auth = getAppAuth();
@@ -55,11 +63,4 @@ export const getUserName = () => {
     return user.displayName;
   }
   return null;
-};
-
-export const querySnapshot = async () => {
-  await getDocs(collection(db, 'Post'));
-  querySnapshot.forEach((doc) => {
-    console.log(doc.id, ' => ', doc.data());
-  });
 };

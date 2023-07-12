@@ -1,5 +1,6 @@
 import './feed.css';
 import { publicações, retornoPublicacoes } from '../../configFirebase/post.js';
+import { singOut } from '../../configFirebase/auth.js';
 
 export default () => {
   const container = document.createElement('div');
@@ -11,7 +12,7 @@ export default () => {
     </div>
 
     <section class="menu">
-      <h2 class="saudacao">Olá, <span id="nome-usuario">fulaninho(a)</span>!</h2>
+      <h2 class="saudacao">Olá, <span id="nome-usuario">fulaninho</span>!</h2>
       <h3 class="convite">Possui um convite? Acesse:</h3>
       <ul>
         <li><a href="#cafeComRum">Café com Rum</a></li>
@@ -40,26 +41,24 @@ export default () => {
   container.innerHTML = template;
 
   const btnPostagem = container.querySelector('#postagemID');
+  const btnDeslogar = container.querySelector('#logoutButton');
+
+  btnDeslogar.addEventListener('click', singOut);
 
   btnPostagem.addEventListener('click', async () => {
     const mensagem = container.querySelector('#areaMensagem').value;
-
     if (mensagem.length > 0) {
       await publicações(mensagem);
       container.querySelector('#areaMensagem').value = '';
-      await mostrarPostagem();
-    } else {
-      alert('Digite sua mensagem!');
     }
   });
 
   async function mostrarPostagem() {
     const publicacoes = await retornoPublicacoes();
     const postagem = container.querySelector('#postagem');
-    postagem.innerHTML = "";
+    postagem.innerHTML = '';
 
-    // NaN = "Not-a-Number"
-    const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
+    const postagensValidas = publicacoes.filter((post) => !Number(post.timestamp));
 
     postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
 
@@ -74,7 +73,7 @@ export default () => {
         publicar.innerHTML = ` 
           <section class='conteudo'>
             <div class='nome-data'>
-              <h3 class='nome'> ${post.name}</h3>
+              <h4 class='nome'> ${post.name}</h3>
               <p class='timestamp'> ${dataFormatada}</p>
             </div>
             <p class='conteudoPag'> ${post.msg}</p>
@@ -87,8 +86,6 @@ export default () => {
         postagem.appendChild(publicar);
       });
     }
-
-
   }
 
   mostrarPostagem();
