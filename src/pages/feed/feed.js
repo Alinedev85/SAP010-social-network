@@ -47,13 +47,9 @@ export default () => {
 
   btnPostagem.addEventListener('click', async () => {
     const mensagem = container.querySelector('#areaMensagem').value;
-
     if (mensagem.length > 0) {
       await publicações(mensagem);
       container.querySelector('#areaMensagem').value = '';
-      await mostrarPostagem();
-    } else {
-      alert('Digite sua mensagem!');
     }
   });
 
@@ -62,8 +58,7 @@ export default () => {
     const postagem = container.querySelector('#postagem');
     postagem.innerHTML = '';
 
-    // NaN = "Not-a-Number"
-    const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
+    const postagensValidas = publicacoes.filter((post) => !Number(post.timestamp));
 
     postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
 
