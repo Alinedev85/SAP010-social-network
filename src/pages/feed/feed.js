@@ -60,7 +60,11 @@ export default () => {
 
     const postagensValidas = publicacoes.filter((post) => !Number(post.timestamp));
 
-    postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
+    postagensValidas.sort((a, b) => {
+      const timestampA = a.timestamp || 0;
+      const timestampB = b.timestamp || 0;
+      return timestampB - timestampA;
+    });
 
     if (postagensValidas.length > 0) {
       postagensValidas.forEach((post) => {
@@ -87,6 +91,21 @@ export default () => {
       });
     }
   }
+
+  const btnPostagem = container.querySelector('#postagemID');
+
+  btnPostagem.addEventListener('click', async () => {
+    const mensagem = container.querySelector('#areaMensagem').value;
+    const mensagemErro = container.querySelector('#mensagemErro');
+    if (mensagem.length > 0) {
+      await publicações(mensagem);
+      container.querySelector('#areaMensagem').value = '';
+      await mostrarPostagem();
+      mensagemErro.textContent = '';
+    } else {
+      mensagemErro.textContent = 'Digite sua mensagem!';
+    }
+  });
 
   mostrarPostagem();
 

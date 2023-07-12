@@ -4,9 +4,12 @@
 // getUserId - retorno do id do usuario
 
 import {
-  getAuth, createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile,
-  signOut,
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+  updateProfile,
 } from 'firebase/auth';
 
 import {
