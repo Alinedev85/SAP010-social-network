@@ -138,6 +138,7 @@ import {
   };
   
   await createUserWithEmail(name, email, password);
+  
   expect(getAppAuth).toHaveBeenCalledTimes(1);
   expect(authMock.createUserWithEmailAndPassword).toHaveBeenCalledWith(email, password);
   expect(authMock.updateProfile).toHaveBeenCalledWith({
