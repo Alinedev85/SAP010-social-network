@@ -17,6 +17,7 @@ export const publicações = async (mensagem) => {
   return document;
 };
 
+
 export const retornoPublicacoes = async () => {
   const publicacoes = [];
   const querySnapshot = await getDocs(collection(db, 'Post'));
