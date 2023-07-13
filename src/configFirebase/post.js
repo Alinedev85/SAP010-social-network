@@ -1,5 +1,6 @@
+import { getDoc } from 'firebase/firestore';
 import {
-  collection, db, auth, addDoc, getDocs,
+  collection, db, auth, addDoc, getDocs, arrayUnion, arrayRemove,
 } from './configFirebase.js';
 
 export const publicações = async (mensagem) => {
@@ -14,10 +15,10 @@ export const publicações = async (mensagem) => {
   return document;
 };
 // FUNÇÃO DE DAR O LIKE
-export async function likePost(commentId, like) {
+export async function likePost(likeid, like) {
   const db = getFirestore();
-  const commentRef = doc(db, 'comments', commentId);
-  const commentDoc = await getDoc(commentRef);
+  const commentRef = getDoc(db, 'Post', likeid);
+  const commentDoc = await getDocs(commentRef);
   const authUid = getAuth().currentUser.uid;
   const commentData = commentDoc.data();
 

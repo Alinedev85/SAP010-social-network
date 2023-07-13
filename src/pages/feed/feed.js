@@ -69,8 +69,7 @@ export default () => {
     const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
 
     postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
-
-    const likeButton = container.querySelector('.btn-like');
+    
     const likeCountElement = container.querySelector('.likeCount');
 
     if (postagensValidas.length > 0) {
@@ -93,6 +92,7 @@ export default () => {
             <button class='botaoExtra'>Deletar</button>
             <a class='btn-like${post.like && post.like.includes(auth.currentUser.uid) ? ' liked' : ''}' data-comment-id='${post.id}'>☕️</a>
             <span class="likeCount">${post.likeCount}</span>
+          
             ${post.name === auth.currentUser.displayName}
             </div>
           </section>`;
@@ -100,7 +100,7 @@ export default () => {
         postagem.appendChild(publicar);
       });
     }
-
+    const likeButton = container.querySelector('.btn-like');
     // FUNÇÃO DE DAR O LIKE
     likeButton.addEventListener('click', async () => {
       const commentId = likeButton.dataset.commentId;
