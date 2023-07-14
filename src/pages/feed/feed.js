@@ -1,6 +1,6 @@
 import './feed.css';
 import { publicações, retornoPublicacoes, likePost } from '../../configFirebase/post.js';
-import { singOut } from '../../configFirebase/auth.js';
+// import { singOut } from '../../configFirebase/auth.js';
 import { auth } from '../../configFirebase/configFirebase.js';
 
 export default () => {
@@ -8,7 +8,7 @@ export default () => {
 
   const template = `
   <div class="container">
-    <div class="logo"> 
+    <div class="logo">
       <img src="./images/logo5.png">
     </div>
 
@@ -20,7 +20,7 @@ export default () => {
       </ul>
       <button id="logoutButton" class="logout">Deslogar</button>
     </section>
-        
+
     <section class="filtros">
       <h2 class="saudacao">Acesse também:</h2>
       <ul>
@@ -37,7 +37,7 @@ export default () => {
       <div id="mensagemErro" class="error"></div>
     </div>
 
-    <section id="postagem" class="postagemFeed"></section> 
+    <section id="postagem" class="postagemFeed"></section>
   `;
 
   container.innerHTML = template;
@@ -45,7 +45,7 @@ export default () => {
   const btnPostagem = container.querySelector('#postagemID');
   const btnDeslogar = container.querySelector('#logoutButton');
 
-  btnDeslogar.addEventListener('click', singOut);
+  //btnDeslogar.addEventListener('click', singOut);
 
   async function mostrarPostagem() {
     const publicacoes = await retornoPublicacoes();
@@ -65,13 +65,9 @@ export default () => {
       }
     });
 
-    // NaN = "Not-a-Number"
     const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
 
     postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
-
-    const likeButton = container.querySelector('.btn-like');
-    const likeCountElement = container.querySelector('.likeCount');
 
     if (postagensValidas.length > 0) {
       postagensValidas.forEach((post) => {
@@ -81,7 +77,7 @@ export default () => {
         const date = new Date(timestamp);
         const dataFormatada = date.toLocaleString();
 
-        publicar.innerHTML = ` 
+        publicar.innerHTML = `
           <section class='conteudo'>
             <div class='nome-data'>
               <h4 class='nome'> ${post.name}</h3>
@@ -89,11 +85,11 @@ export default () => {
             </div>
             <p class='conteudoPag'> ${post.msg}</p>
             <div class='botoes'>
-            <button class='botaoCurtir'>Editar</button>
-            <button class='botaoExtra'>Deletar</button>
-            <a class='btn-like${post.like && post.like.includes(auth.currentUser.uid) ? ' liked' : ''}' data-comment-id='${post.id}'>☕️</a>
-            <span class="likeCount">${post.likeCount}</span>
-            ${post.name === auth.currentUser.displayName}
+              <button class='botaoCurtir'>Editar</button>
+              <button class='botaoExtra'>Deletar</button>
+              <a class='btn-like${post.likes && post.likes.includes(auth.currentUser.uid) ? ' liked' : ''}' data-comment-id='${post.id}'>☕️</a>
+              <span class="likeCount">${post.likeCount || 0}</span>
+              ${post.name === auth.currentUser.displayName}
             </div>
           </section>`;
 
@@ -101,27 +97,31 @@ export default () => {
       });
     }
 
-    // FUNÇÃO DE DAR O LIKE
-    likeButton.addEventListener('click', async () => {
-      const commentId = likeButton.dataset.commentId;
-      const userLiked = likeButton.classList.contains('liked');
-      await likePost(commentId, !userLiked);
+    const likeButtons = container.querySelectorAll('.btn-like');
 
-      if (userLiked) {
-        likeButton.classList.remove('liked');
-        likeButton.textContent = '❤️';
-        likeCountElement.textContent = parseInt(likeCountElement.textContent, 10) - 1;
-        // console.log(likeButton.addEventListener);
-      } else {
-        likeButton.classList.add('liked');
-        likeButton.textContent = '☕️';
-        likeCountElement.textContent = parseInt(likeCountElement.textContent, 10) + 1;
-        // console.log(likeButton.addEventListener);
-      }
+    likeButtons.forEach((likeButton) => {
+      likeButton.addEventListener('click', async () => {
+        const commentId = likeButton.dataset.commentId;
+        const userLiked = likeButton.classList.contains('liked');
+        await likePost(commentId, !userLiked);
+
+        if (userLiked) {
+          likeButton.classList.remove('liked');
+          likeButton.textContent = '❤️';
+          const likeCountElement = likeButton.nextElementSibling;
+          likeCountElement.textContent = parseInt(likeCountElement.textContent, 10) - 1;
+        } else {
+          likeButton.classList.add('liked');
+          likeButton.textContent = '☕️';
+          const likeCountElement = likeButton.nextElementSibling;
+          likeCountElement.textContent = parseInt(likeCountElement.textContent, 10) + 1;
+        }
+      });
     });
-  }
 
+
+  }
   mostrarPostagem();
 
   return container;
-};
+}
