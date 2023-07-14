@@ -97,6 +97,7 @@ export default () => {
       });
     }
 
+
     const likeButtons = container.querySelectorAll('.btn-like');
 
     likeButtons.forEach((likeButton) => {
@@ -118,7 +119,6 @@ export default () => {
         }
       });
     });
-
 
   }
   mostrarPostagem();

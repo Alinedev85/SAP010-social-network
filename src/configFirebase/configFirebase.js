@@ -33,3 +33,4 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 export { collection, getDocs, getDoc, addDoc, arrayRemove, arrayUnion, doc, updateDoc };
+

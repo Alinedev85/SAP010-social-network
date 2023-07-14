@@ -1,3 +1,4 @@
+import { getDoc } from 'firebase/firestore';
 import {
   collection,
   db,
@@ -11,6 +12,7 @@ import {
   doc,
 } from '../../src/configFirebase/configFirebase';
 
+
 export const publicações = async (mensagem) => {
   const timestamp = new Date().getTime();
   const document = await addDoc(collection(db, 'Post'), {
@@ -23,6 +25,7 @@ export const publicações = async (mensagem) => {
   return document;
 };
 
+// FUNÇÃO DE DAR O LIKE
 export async function likePost(commentId, like) {
   const commentRef = doc(db, 'Post', commentId);
   const commentDoc = await getDoc(commentRef);
