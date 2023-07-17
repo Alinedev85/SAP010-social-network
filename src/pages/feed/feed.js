@@ -1,8 +1,17 @@
 import './feed.css';
+
 import {
-  publicações, retornoPublicacoes, likePost, deletePost,
+  publicações,
+  retornoPublicacoes,
+  likePost,
+  deletePost,
 } from '../../configFirebase/post.js';
-import { userStateLogout, userAuthChanged } from '../../configFirebase/auth.js';
+
+import {
+  userStateLogout,
+  userAuthChanged,
+} from '../../configFirebase/auth.js';
+
 import { auth } from '../../configFirebase/configFirebase.js';
 
 export default () => {
@@ -77,8 +86,7 @@ export default () => {
       }
     });
 
-    const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
-
+    const postagensValidas = publicacoes.filter((post) => typeof post.timestamp === 'number');
     postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
 
     if (postagensValidas.length > 0) {
