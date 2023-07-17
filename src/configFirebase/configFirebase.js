@@ -3,7 +3,12 @@ import {
   getFirestore,
   collection,
   getDocs,
+  getDoc,
   addDoc,
+  arrayRemove,
+  arrayUnion,
+  doc,
+  updateDoc,
 } from 'firebase/firestore';
 
 import { initializeApp } from 'firebase/app';
@@ -27,4 +32,4 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export { collection, getDocs, addDoc };
+export { collection, getDocs, getDoc, addDoc, arrayRemove, arrayUnion, doc, updateDoc };

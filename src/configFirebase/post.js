@@ -1,6 +1,15 @@
 import {
-  collection, db, auth, addDoc, getDocs,
-} from './configFirebase.js';
+  collection,
+  db,
+  auth,
+  addDoc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  getDocs,
+  doc,
+} from '../../src/configFirebase/configFirebase';
 
 export const publicações = async (mensagem) => {
   const timestamp = new Date().getTime();
@@ -13,26 +22,25 @@ export const publicações = async (mensagem) => {
   });
   return document;
 };
-// FUNÇÃO DE DAR O LIKE
+
 export async function likePost(commentId, like) {
-  const db = getFirestore();
-  const commentRef = doc(db, 'comments', commentId);
+  const commentRef = doc(db, 'Post', commentId);
   const commentDoc = await getDoc(commentRef);
-  const authUid = getAuth().currentUser.uid;
+  const authUid = auth.currentUser.uid;
   const commentData = commentDoc.data();
 
   const likeCount = commentData.likeCount || 0;
 
-  if (like && (!commentData.like || !commentData.like.includes(authUid))) {
+  if (like && (!commentData.likes || !commentData.likes.includes(authUid))) {
     await updateDoc(commentRef, {
-      like: arrayUnion(authUid),
+      likes: arrayUnion(authUid),
       likeCount: likeCount + 1,
     });
   }
 
-  if (!like && commentData.like && commentData.like.includes(authUid)) {
+  if (!like && commentData.likes && commentData.likes.includes(authUid)) {
     await updateDoc(commentRef, {
-      like: arrayRemove(authUid),
+      likes: arrayRemove(authUid),
       likeCount: likeCount - 1,
     });
   }
