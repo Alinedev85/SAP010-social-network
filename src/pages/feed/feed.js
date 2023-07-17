@@ -1,6 +1,6 @@
 import './feed.css';
 import { publicações, retornoPublicacoes, likePost } from '../../configFirebase/post.js';
-// import { singOut } from '../../configFirebase/auth.js';
+import { userStateLogout, userAuthChanged } from '../../configFirebase/auth.js';
 import { auth } from '../../configFirebase/configFirebase.js';
 
 export default () => {
@@ -45,7 +45,17 @@ export default () => {
   const btnPostagem = container.querySelector('#postagemID');
   const btnDeslogar = container.querySelector('#logoutButton');
 
-  //btnDeslogar.addEventListener('click', singOut);
+  btnDeslogar.addEventListener('click', async () => {
+    try {
+      // eslint-disable-next-line no-console
+      console.log('logged out');
+      userStateLogout(userAuthChanged);
+      window.location.href = '';
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Erro ao deslogar', error);
+    }
+  });
 
   async function mostrarPostagem() {
     const publicacoes = await retornoPublicacoes();
@@ -118,10 +128,8 @@ export default () => {
         }
       });
     });
-
-
   }
   mostrarPostagem();
 
   return container;
-}
+};

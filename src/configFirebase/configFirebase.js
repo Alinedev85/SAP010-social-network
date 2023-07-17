@@ -32,4 +32,6 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 
-export { collection, getDocs, getDoc, addDoc, arrayRemove, arrayUnion, doc, updateDoc };
+export {
+  collection, getDocs, getDoc, addDoc, arrayRemove, arrayUnion, doc, updateDoc,
+};
