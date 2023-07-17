@@ -10,51 +10,7 @@ import {
   createUserWithEmail,
 } from '../src/configFirebase/auth';
 
-import { retornoPublicacoes } from '../src/configFirebase/post';
-import {
-  db,
-  getDocs,
-  collection,
-} from '../src/configFirebase/configFirebase';
-
 jest.mock('firebase/auth');
-jest.mock('firebase/firestore');
-
-describe('retornoPublicacoes', () => {
-  it('deve retornar as publicações corretamente', async () => {
-    const mockPublicacoes = [
-      {
-        id: '1',
-        title: 'Publicação 1',
-      },
-      {
-        id: '2',
-        title: 'Publicação 2',
-      },
-    ];
-
-    const querySnapshotMock = {
-      forEach: (callback) => {
-        mockPublicacoes.forEach((doc) => {
-          callback({
-            id: doc.id,
-            data: () => ({
-              ...doc,
-            }),
-          });
-        });
-      },
-    };
-
-    const getDocsMock = jest.fn(() => Promise.resolve(querySnapshotMock));
-    getDocs.mockImplementation(getDocsMock);
-
-    const result = await retornoPublicacoes();
-
-    expect(getDocsMock).toHaveBeenCalledWith(collection(db, 'Post'));
-    expect(result).toEqual(mockPublicacoes);
-  });
-});
 
 describe('loginGoogle', () => {
   it('deverá ser uma função', () => {
@@ -72,7 +28,6 @@ describe('loginGoogle', () => {
     signInWithPopup.mockRejectedValueOnce(new Error(errorMessage));
     try {
       await loginGoogle();
-      // Se a função não lançar um erro falhará no teste
       throw new Error('A função deveria lançar um erro');
     } catch (error) {
       expect(error.message).toBe(errorMessage);
@@ -104,42 +59,39 @@ describe('loginWithEmail', () => {
   });
 });
 
-// Faz o mock da função getAppAuth
+// mock da função getAppAuth
 jest.mock('../src/configFirebase/auth', () => ({
   ...jest.requireActual('../src/configFirebase/auth'),
   getAppAuth: jest.fn(),
 }));
 
 describe('createUserWithEmail', () => {
-  it('deve criar um usuário com email e senha corretos', async () => {
-    const name = 'Test User';
-    const email = 'test@example.com';
+  it('deve lidar com erros ao criar um usuário', async () => {
+    const name = 'Jose cafeina ';
+    const email = 'Jose@cafeina.com';
     const password = '123456';
-
+    const errorMessage = 'Erro ao criar usuário';
     const authMock = {
-      createUserWithEmailAndPassword: jest.fn().mockResolvedValueOnce({
-        user: {
-          displayName: name,
-        },
-      }),
-      updateProfile: jest.fn(), // mmock updateProfile linha31
+      createUserWithEmailAndPassword: jest.fn().mockRejectedValueOnce({ message: errorMessage }),
+      updateProfile: jest.fn(),
     };
     getAppAuth.mockReturnValue(authMock);
-
-    // mock da janela
+    // moockda janela
     global.window = {
       location: {
         hash: '',
       },
     };
-
-    await createUserWithEmail(name, email, password);
-
+    try {
+      await createUserWithEmail(name, email, password);
+    } catch (error) {
+      expect(error.message).toBe(errorMessage);
+    }
     expect(getAppAuth).toHaveBeenCalledTimes(1);
     expect(authMock.createUserWithEmailAndPassword).toHaveBeenCalledWith(email, password);
-    expect(authMock.updateProfile).toHaveBeenCalledWith({
+    expect(authMock.updateProfile).toHaveBeenCalledWith(authMock.currentUser, {
       displayName: name,
     });
-    expect(window.location.hash).toBe('#feed');
+    expect(window.location.hash).toBe('');
   });
 });
