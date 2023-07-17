@@ -1,6 +1,5 @@
 import './login.css';
 import { loginWithEmail, loginGoogle } from '../../configFirebase/auth';
-
 export default () => {
   const container = document.createElement('div');
 

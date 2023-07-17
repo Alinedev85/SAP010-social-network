@@ -9,7 +9,7 @@ import {
   arrayRemove,
   getDocs,
   doc,
-} from '../../src/configFirebase/configFirebase';
+} from './configFirebase';
 
 export const publicações = async (mensagem) => {
   const timestamp = new Date().getTime();
