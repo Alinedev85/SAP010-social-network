@@ -1,5 +1,7 @@
 import './feed.css';
-import { publicações, retornoPublicacoes, likePost } from '../../configFirebase/post.js';
+import {
+  publicações, retornoPublicacoes, likePost, deletePost,
+} from '../../configFirebase/post.js';
 import { userStateLogout, userAuthChanged } from '../../configFirebase/auth.js';
 import { auth } from '../../configFirebase/configFirebase.js';
 
@@ -96,16 +98,35 @@ export default () => {
             <p class='conteudoPag'> ${post.msg}</p>
             <div class='botoes'>
               <button class='botaoCurtir'>Editar</button>
-              <button class='botaoExtra'>Deletar</button>
+              <button class='botaoExtra' data-remove="${post.id}">Deletar</button>
               <a class='btn-like${post.likes && post.likes.includes(auth.currentUser.uid) ? ' liked' : ''}' data-comment-id='${post.id}'>☕️</a>
               <span class="likeCount">${post.likeCount || 0}</span>
-              ${post.name === auth.currentUser.displayName}
+              
             </div>
           </section>`;
 
         postagem.appendChild(publicar);
       });
     }
+
+    const btnDeletar = container.querySelector('.botaoExtra');
+
+    btnDeletar.addEventListener('click', (e) => {
+      // eslint-disable-next-line no-alert
+      const confirmDelete = window.confirm('Deseja excluir esta publicação?');
+      const dataDelete = e.target.dataset.remove;
+      if (confirmDelete) {
+        deletePost(dataDelete)
+          .then(() => {
+            window.alert('Publicação excluída com sucesso!');
+            mostrarPostagem();
+          })
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.log('Erro ao excluir a publicação:', error);
+          });
+      }
+    });
 
     const likeButtons = container.querySelectorAll('.btn-like');
 

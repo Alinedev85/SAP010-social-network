@@ -9,6 +9,7 @@ import {
   arrayRemove,
   getDocs,
   doc,
+  deleteDoc,
 } from './configFirebase';
 
 export const publicações = async (mensagem) => {
@@ -56,3 +57,7 @@ export const retornoPublicacoes = async () => {
 
   return publicacoes;
 };
+
+export async function deletePost(postId) {
+  await deleteDoc(doc(db, 'Post', postId));
+}
