@@ -10,8 +10,6 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
-  signOut,
-  onAuthStateChanged,
 } from 'firebase/auth';
 
 import {
@@ -47,16 +45,12 @@ export const loginWithEmail = (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
 
-// deslogar
-export async function userStateLogout() {
-  const authLogOut = getAuth();
-  await signOut(authLogOut);
-}
-
-export async function userAuthChanged(callback) {
-  const authLogin = getAuth(app);
-  onAuthStateChanged(authLogin, callback);
-}
+export const singOut = () => {
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    window.location.hash = '#login';
+  });
+};
 
 // id do usuario no firebase
 export const getUserId = () => {
@@ -73,5 +67,3 @@ export const getUserName = () => {
   }
   return null;
 };
-
-export { getAuth };

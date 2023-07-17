@@ -51,7 +51,7 @@ describe('retornoPublicacoes', () => {
 
     const result = await retornoPublicacoes();
 
-    expect(getDocsMock).toHaveBeenCalledWith(collection(db, 'Post22'));
+    expect(getDocsMock).toHaveBeenCalledWith(collection(db, 'Post'));
     expect(result).toEqual(mockPublicacoes);
   });
 });
