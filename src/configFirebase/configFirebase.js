@@ -9,6 +9,7 @@ import {
   arrayUnion,
   doc,
   updateDoc,
+  deleteDoc,
 } from 'firebase/firestore';
 
 import { initializeApp } from 'firebase/app';
@@ -33,5 +34,5 @@ export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 export {
-  collection, getDocs, getDoc, addDoc, arrayRemove, arrayUnion, doc, updateDoc,
+  collection, getDocs, getDoc, addDoc, arrayRemove, arrayUnion, doc, updateDoc, deleteDoc,
 };
