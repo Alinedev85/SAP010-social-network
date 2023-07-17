@@ -2,14 +2,13 @@ import './feed.css';
 import { publicações, retornoPublicacoes, likePost } from '../../configFirebase/post.js';
 // import { singOut } from '../../configFirebase/auth.js';
 import { auth } from '../../configFirebase/configFirebase.js';
-
 export default () => {
   const container = document.createElement('div');
 
   const template = `
   <div class="container">
-    <div class="logo">
-      <img src="./images/logo5.png">
+    <div class="logo"> 
+      <img src="${logoFeed}">
     </div>
 
     <section class="menu">
@@ -28,7 +27,7 @@ export default () => {
         <li><a href="https://app.powerbi.com/view?r=eyJrIjoiNDdkNDM4ZjctYzk0OS00NWVjLWFlYjktZWQ4Njg3MDEyMTg0IiwidCI6ImU2ZDkwZGYzLWYxOGItNGJkZC04MDhjLWFhNmQwZjY4YjgwOSJ9" target="_blank">Busca por Armazenadores</a></li>
         <li><a href="https://portaldeinformacoes.conab.gov.br/produtos-360.html" target="_blank">Acompanhe o preço da saca</a></li>
       </ul>
-      <img class="fundo" src="./images/background-filtros.png">
+      <img class="fundo" src="${backgroundFiltros}">
     </section>
 
     <div class="postagens">
@@ -45,7 +44,17 @@ export default () => {
   const btnPostagem = container.querySelector('#postagemID');
   const btnDeslogar = container.querySelector('#logoutButton');
 
-  //btnDeslogar.addEventListener('click', singOut);
+  btnDeslogar.addEventListener('click', async () => {
+    try {
+      // eslint-disable-next-line no-console
+      console.log('logged out');
+      userStateLogout(userAuthChanged);
+      window.location.href = '';
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Erro ao deslogar', error);
+    }
+  });
 
   async function mostrarPostagem() {
     const publicacoes = await retornoPublicacoes();
@@ -65,9 +74,17 @@ export default () => {
       }
     });
 
+    // NaN = "Not-a-Number"
+    // eslint-disable-next-line no-restricted-globals
     const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
 
     postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
+    // postagensValidas.sort((a, b) => {
+    //   const timestampA = a.timestamp || 0;
+    //   const timestampB = b.timestamp || 0;
+    //   return timestampB - timestampA;
+    // });
+
 
     if (postagensValidas.length > 0) {
       postagensValidas.forEach((post) => {
@@ -96,6 +113,30 @@ export default () => {
         postagem.appendChild(publicar);
       });
     }
+
+
+    const btnDeletar = container.querySelector('.botaoDeletar');
+
+    // btnDeletar.addEventListener('click', (postId) => {
+    //   const confirmDelete = window.confirm('Deseja excluir esse comentário?');
+    //   console.log(confirmDelete.value);
+    //   if (confirmDelete) {
+    //     deletePost(id);
+    //     // mostrarPostagem();
+    //   }
+    // });
+
+    btnDeletar.addEventListener('click', async () => {
+      const postId = btnDeletar.getAttribute('data-post-id');
+      if (confirm('Tem certeza de que deseja excluir este post?')) {
+        try {
+          await deletePost(postId);
+          postElement.remove();
+        } catch (error) {
+          console.log('Erro ao excluir o post:', error);
+        }
+      }
+    });
 
     const likeButtons = container.querySelectorAll('.btn-like');
 

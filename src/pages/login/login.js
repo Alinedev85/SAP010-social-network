@@ -1,4 +1,8 @@
 import './login.css';
+import logoInicio from '../../images/logo1.png';
+import backgroundDesktop from '../../images/background-desktop.png';
+import logoGoogle from '../../images/logo4.png';
+import iconEyeOff from '../../images/icons/eye-off.svg';
 import { loginWithEmail, loginGoogle } from '../../configFirebase/auth';
 
 export default () => {
@@ -6,8 +10,8 @@ export default () => {
 
   const template = `
   <div class="imagens">
-    <img class="logo-cs" src="./images/logo1.png">
-    <img class="imagem-fundo" src="./images/background-desktop.png">
+    <img class="logo-cs" src="${logoInicio}">
+    <img class="imagem-fundo" src="${backgroundDesktop}">
   </div>
     <fieldset>
       <h2>Entre com</h2>
@@ -16,7 +20,7 @@ export default () => {
       <input type="email" id="email" placeholder="Digite seu e-mail">
       <label for="senha">Senha</label>
       <input type="password" id="senha" placeholder="Digite sua senha">
-      <img class="eye" id="eyeToggle" src="./images/icons/eye-off.svg">
+      <img class="eye" id="eyeToggle" src="${iconEyeOff}">
       <div id="errorMessage" class="error">
       </div>
       <a href="">Esqueceu a senha? Clique aqui!</a>
@@ -27,7 +31,7 @@ export default () => {
           </div>
           <h3>-- ou --</h3>
         <div class="google">
-        <button id="googleLoginButton">Acesse com sua conta <img class="logo-google" src="./images/logo4.png"></button>
+        <button id="googleLoginButton">Acesse com sua conta <img class="logo-google" src="${logoGoogle}"></button>
        </div>
       
        <footer> Desenvolvedoras: Aline Ferreira, Josi Corrêa e Nara Monteiro </footer>

@@ -1,4 +1,6 @@
 import './register.css';
+import logoInicio from '../../images/logo1.png';
+import backgroundDesktop from '../../images/background-desktop.png';
 import { createUserWithEmail } from '../../configFirebase/auth';
 
 export default () => {
@@ -7,8 +9,8 @@ export default () => {
   const templateRegister = `
 
   <div class="imagens">
-  <img class="logo-cs" src="./images/logo1.png">
-  <img class="imagem-fundo" src="./images/background-desktop.png">
+  <img class="logo-cs" src="${logoInicio}">
+  <img class="imagem-fundo" src="${backgroundDesktop}">
   </div>
     <fieldset>
       <h2> *CAMPOS OBRIGATÓRIOS  </h2>
