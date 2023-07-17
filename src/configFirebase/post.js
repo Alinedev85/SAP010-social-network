@@ -61,3 +61,7 @@ export const retornoPublicacoes = async () => {
 export async function deletePost(postId) {
   await deleteDoc(doc(db, 'Post', postId));
 }
+
+export async function updatePost(postId, updatedComment) {
+  await updateDoc(doc(db, 'Post', postId), updatedComment);
+}

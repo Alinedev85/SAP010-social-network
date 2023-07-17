@@ -5,6 +5,7 @@ import {
   retornoPublicacoes,
   likePost,
   deletePost,
+  updatePost,
 } from '../../configFirebase/post.js';
 
 import {
@@ -105,7 +106,7 @@ export default () => {
             </div>
             <p class='conteudoPag'> ${post.msg}</p>
             <div class='botoes'>
-              <button class='botaoCurtir'>Editar</button>
+              <button class='botaoEditar' data-update="${post.id}">Editar</button>
               <button class='botaoExtra' data-remove="${post.id}">Deletar</button>
               <a class='btn-like${post.likes && post.likes.includes(auth.currentUser.uid) ? ' liked' : ''}' data-comment-id='${post.id}'>☕️</a>
               <span class="likeCount">${post.likeCount || 0}</span>
@@ -135,6 +136,30 @@ export default () => {
           });
       }
     });
+
+    const botaoEditar = container.querySelector('.botaoEditar');
+
+    if (botaoEditar) {
+      botaoEditar.addEventListener('click', (e) => {
+        const confirmEdit = window.prompt('Digite o novo comentário:');
+        const updatedPost = e.target.dataset.update;
+        console.log('NOVO POST: ', confirmEdit);
+        console.log('updatedPost: ', updatedPost);
+        if (confirmEdit) {
+          updatePost(updatedPost, { msg: confirmEdit })
+            .then(() => {
+              // Atualiza a exibição dos comentários após editar um comentário
+              window.alert('Publicação editada com sucesso!');
+              mostrarPostagem();
+            })
+            .catch((error) => {
+              window.alert('Erro ao editar!');
+              // eslint-disable-next-line no-console
+              console.log('Erro ao editar o comentário:', error);
+            });
+        }
+      });
+    }
 
     const likeButtons = container.querySelectorAll('.btn-like');
 
