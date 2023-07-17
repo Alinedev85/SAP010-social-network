@@ -1,7 +1,15 @@
 import './feed.css';
-import { publicações, retornoPublicacoes, likePost } from '../../configFirebase/post.js';
-import { singOut } from '../../configFirebase/auth.js';
-import { auth } from '../../configFirebase/configFirebase.js';
+import backgroundFiltros from '../../images/background-filtros.png';
+import logoFeed from '../../images/logo5.png';
+import {
+  publicações,
+  retornoPublicacoes,
+  likePost,
+  deletePost,
+  // checkAuthor,
+} from '../../configFirebase/post.js';
+import { userStateLogout, userAuthChanged } from '../../configFirebase/auth.js';
+import { auth, db } from '../../configFirebase/configFirebase.js';
 
 export default () => {
   const container = document.createElement('div');
@@ -9,7 +17,7 @@ export default () => {
   const template = `
   <div class="container">
     <div class="logo"> 
-      <img src="./images/logo5.png">
+      <img src="${logoFeed}">
     </div>
 
     <section class="menu">
@@ -28,7 +36,7 @@ export default () => {
         <li><a href="https://app.powerbi.com/view?r=eyJrIjoiNDdkNDM4ZjctYzk0OS00NWVjLWFlYjktZWQ4Njg3MDEyMTg0IiwidCI6ImU2ZDkwZGYzLWYxOGItNGJkZC04MDhjLWFhNmQwZjY4YjgwOSJ9" target="_blank">Busca por Armazenadores</a></li>
         <li><a href="https://portaldeinformacoes.conab.gov.br/produtos-360.html" target="_blank">Acompanhe o preço da saca</a></li>
       </ul>
-      <img class="fundo" src="./images/background-filtros.png">
+      <img class="fundo" src="${backgroundFiltros}">
     </section>
 
     <div class="postagens">
@@ -45,7 +53,17 @@ export default () => {
   const btnPostagem = container.querySelector('#postagemID');
   const btnDeslogar = container.querySelector('#logoutButton');
 
-  btnDeslogar.addEventListener('click', singOut);
+  btnDeslogar.addEventListener('click', async () => {
+    try {
+      // eslint-disable-next-line no-console
+      console.log('logged out');
+      userStateLogout(userAuthChanged);
+      window.location.href = '';
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('Erro ao deslogar', error);
+    }
+  });
 
   async function mostrarPostagem() {
     const publicacoes = await retornoPublicacoes();
@@ -66,12 +84,15 @@ export default () => {
     });
 
     // NaN = "Not-a-Number"
+    // eslint-disable-next-line no-restricted-globals
     const postagensValidas = publicacoes.filter((post) => !isNaN(post.timestamp));
 
     postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
-
-    const likeButton = container.querySelector('.btn-like');
-    const likeCountElement = container.querySelector('.likeCount');
+    // postagensValidas.sort((a, b) => {
+    //   const timestampA = a.timestamp || 0;
+    //   const timestampB = b.timestamp || 0;
+    //   return timestampB - timestampA;
+    // });
 
     if (postagensValidas.length > 0) {
       postagensValidas.forEach((post) => {
@@ -89,8 +110,8 @@ export default () => {
             </div>
             <p class='conteudoPag'> ${post.msg}</p>
             <div class='botoes'>
-            <button class='botaoCurtir'>Editar</button>
-            <button class='botaoExtra'>Deletar</button>
+            <button class='botaoEditar'>Editar</button>
+            <button class='botaoDeletar'>Deletar</button>
             <a class='btn-like${post.like && post.like.includes(auth.currentUser.uid) ? ' liked' : ''}' data-comment-id='${post.id}'>☕️</a>
             <span class="likeCount">${post.likeCount}</span>
             ${post.name === auth.currentUser.displayName}
@@ -100,6 +121,32 @@ export default () => {
         postagem.appendChild(publicar);
       });
     }
+
+    const btnDeletar = container.querySelector('.botaoDeletar');
+
+    // btnDeletar.addEventListener('click', (postId) => {
+    //   const confirmDelete = window.confirm('Deseja excluir esse comentário?');
+    //   console.log(confirmDelete.value);
+    //   if (confirmDelete) {
+    //     deletePost(id);
+    //     // mostrarPostagem();
+    //   }
+    // });
+
+    btnDeletar.addEventListener('click', async () => {
+      const postId = btnDeletar.getAttribute('data-post-id');
+      if (confirm('Tem certeza de que deseja excluir este post?')) {
+        try {
+          await deletePost(postId);
+          postElement.remove();
+        } catch (error) {
+          console.log('Erro ao excluir o post:', error);
+        }
+      }
+    });
+
+    const likeButton = container.querySelector('.btn-like');
+    const likeCountElement = container.querySelector('.likeCount');
 
     // FUNÇÃO DE DAR O LIKE
     likeButton.addEventListener('click', async () => {
