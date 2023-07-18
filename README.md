@@ -17,9 +17,9 @@
 
 Projeto desenvolvido por:
 
-Aline Ferreira [LinkedIn](link-linkedin) | [GitHub](link-github)
-Josielen Rubin [LinkedIn](link-linkedin) | [GitHub](link-github)
-Nara Alice Brando [LinkedIn](link-linkedin) | [GitHub](link-github)
+* Aline Ferreira [LinkedIn](link-linkedin) | [GitHub](link-github)
+* Josielen Rubin [LinkedIn](link-linkedin) | [GitHub](link-github)
+* Nara Alice Brando [LinkedIn](link-linkedin) | [GitHub](link-github)
 
 ## 2. Resumo do projeto
 
@@ -37,13 +37,16 @@ Baixa fidelidade:
 
 
 Alta fidelidade:
-[alta-fidelidade-login](./src/images/prototipo-alta-login-mobile.png)
-[alta-fidelidade-login](./src/images/prototipo-alta-login.png)
+
+![alta-fidelidade-login](./src/images/prototipo-alta-login-mobile.png)
+![alta-fidelidade-login](./src/images/prototipo-alta-login.png)
 
 
 **Feed**
-[alta-fidelidade-feed](./src/images/prototipo-alta-feed-mobile.png)
-[alta-fidelidade-feed](./src/images/prototipo-alta-feed.png)
+* Alta fidelidade:
+
+![feed-mobile](./src/images/prototipo-alta-feed-mobile.png)
+![alta-fidelidade-feed][./src/images/prototipo-alta-fidelidade.png]
 
 <!-- ## 5. Objetivos de aprendizagem
 
@@ -550,3 +553,6 @@ Outras:
   Export](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/export)
 * [Módulos:
   Import](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Sentencias/import) -->
+
+
+[./src/images/prototipo-alta-fidelidade.png]: ./src/images/prototipo-alta-feed.png
