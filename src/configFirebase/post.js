@@ -12,7 +12,7 @@ import {
   deleteDoc,
 } from './configFirebase';
 
-export const publicações = async (mensagem) => {
+export const publicacoes = async (mensagem) => {
   const timestamp = new Date().getTime();
   const document = await addDoc(collection(db, 'Post'), {
     name: auth.currentUser.displayName,
@@ -48,14 +48,14 @@ export async function likePost(commentId, like) {
 }
 
 export const retornoPublicacoes = async () => {
-  const publicacoes = [];
+  const publicacoesRetorno = [];
   const querySnapshot = await getDocs(collection(db, 'Post'));
 
   querySnapshot.forEach((post) => {
-    publicacoes.push({ ...post.data(), id: post.id });
+    publicacoesRetorno.push({ ...post.data(), id: post.id });
   });
 
-  return publicacoes;
+  return publicacoesRetorno;
 };
 
 export async function deletePost(postId) {

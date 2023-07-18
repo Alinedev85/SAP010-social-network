@@ -2,7 +2,6 @@
 
 // getAppAuth- retorno da autenticação do firebase
 // getUserId - retorno do id do usuario
-
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -16,7 +15,7 @@ import {
 
 import {
   app,
-} from './configFirebase.js';
+} from './configFirebase';
 
 // login google
 export const getAppAuth = () => getAuth(app);
@@ -28,17 +27,18 @@ export const loginGoogle = () => {
 };
 
 // criar usuario
-export const createUserWithEmail = (name, email, senha) => {
-  const auth = getAppAuth();
-  return createUserWithEmailAndPassword(auth, email, senha).then(
-    (userCredential) => {
-      const user = userCredential.user;
-      window.location.hash = '#feed';
-      updateProfile(user, {
-        displayName: `${name}`,
-      });
-    },
-  );
+export const createUserWithEmail = async (name, email, senha) => {
+  let errorMessage;
+  try {
+    const userCredential = await createUserWithEmailAndPassword(name, email, senha);
+    const user = userCredential.user;
+    window.location.hash = '#feed';
+    await updateProfile(user, {
+      displayName: `${name}`,
+    });
+  } catch (error) {
+    errorMessage.textContent = 'E-mail já está em uso';
+  }
 };
 
 // login
