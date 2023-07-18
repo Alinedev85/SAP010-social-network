@@ -47,12 +47,12 @@ export default () => {
   const registerButton = container.querySelector('#btn-register');
   const homeButton = container.querySelector('#btn-home');
   const registerUser = () => {
-    const name = nameInput.value;
+    const auth = nameInput.value;
     const email = emailInput.value;
     const senha = senhaInput.value;
-    const areaAtuacao = container.querySelector('#atuaçao').value;
+    // const areaAtuacao = container.querySelector('#atuaçao').value;
 
-    createUserWithEmail(name, email, senha, areaAtuacao)
+    createUserWithEmail(auth, email, senha)
       .then(() => {
       }).catch((error) => {
         const errorMessage = container.querySelector('#errorMessage');

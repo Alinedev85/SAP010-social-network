@@ -1,7 +1,7 @@
 import './feed.css';
 
 import {
-  publicações,
+  publicacoes,
   retornoPublicacoes,
   likePost,
   deletePost,
@@ -70,15 +70,14 @@ export default () => {
   });
 
   async function mostrarPostagem() {
-    const publicacoes = await retornoPublicacoes();
+    const publicacoesRetorno = await retornoPublicacoes();
     const postagem = container.querySelector('#postagem');
     postagem.innerHTML = '';
-
     btnPostagem.addEventListener('click', async () => {
       const mensagem = container.querySelector('#areaMensagem').value;
       const mensagemErro = container.querySelector('#mensagemErro');
       if (mensagem.length > 0) {
-        await publicações(mensagem);
+        await publicacoes(mensagem);
         container.querySelector('#areaMensagem').value = '';
         await mostrarPostagem();
         mensagemErro.textContent = '';
@@ -87,7 +86,7 @@ export default () => {
       }
     });
 
-    const postagensValidas = publicacoes.filter((post) => typeof post.timestamp === 'number');
+    const postagensValidas = publicacoesRetorno.filter((post) => typeof post.timestamp === 'number');
     postagensValidas.sort((a, b) => b.timestamp - a.timestamp);
 
     if (postagensValidas.length > 0) {

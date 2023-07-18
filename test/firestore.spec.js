@@ -1,41 +1,40 @@
 import {
   retornoPublicacoes,
-  publicações,
+  publicacoes,
+  likePost,
 } from '../src/configFirebase/post';
 
 import {
   db,
+  doc,
   getDocs,
-  collection,
   auth,
   addDoc,
+  collection,
 } from '../src/configFirebase/configFirebase';
 
-jest.mock('firebase/firestore');
 jest.mock('../src/configFirebase/configFirebase');
 
-describe('publicações', () => {
+describe('publicacoes', () => {
   it('deve adicionar um novo post à coleção Firestore', async () => {
     const mockMensagem = 'mensagem de teste';
-    const mockTimestamp = 1689609377626;
-    const addDocMock = jest.fn(() => Promise.resolve({ id: 'mockPostId' }));
-    addDoc.mockImplementation(addDocMock);
+    const mockTimestamp = 1689688182295;
+    addDoc.mockResolvedValueOnce({ id: 'mockPostId' });
 
     auth.currentUser = {
-      displayName: 'João do café',
       uid: '123456',
+      displayName: 'Nome do usuário',
     };
-    const originalDateNow = Date.now;
-    global.Date.now = jest.fn(() => mockTimestamp);
-    const document = await publicações(mockMensagem);
-    global.Date.now = originalDateNow;
 
-    expect(addDocMock).toHaveBeenCalledWith(collection(db, 'Post'), {
+    Date.now = jest.fn(() => mockTimestamp);
+
+    const document = await publicacoes(mockMensagem);
+    expect(addDoc).toHaveBeenCalledWith(collection(db, 'Post'), {
       name: auth.currentUser.displayName,
       author: auth.currentUser.uid,
       msg: mockMensagem,
       likes: [],
-      timestamp: mockTimestamp,
+      Timestamp: mockTimestamp,
     });
     expect(document).toEqual({ id: 'mockPostId' });
   });
@@ -46,21 +45,21 @@ describe('retornoPublicacoes', () => {
     const mockPublicacoes = [
       {
         id: '1',
-        title: 'Publicação 1',
+        post: 'Publicação 1',
       },
       {
         id: '2',
-        title: 'Publicação 2',
+        post: 'Publicação 2',
       },
     ];
 
     const querySnapshotMock = {
       forEach: (callback) => {
-        mockPublicacoes.forEach((doc) => {
+        mockPublicacoes.forEach((post) => {
           callback({
-            id: doc.id,
+            id: post.id,
             data: () => ({
-              ...doc,
+              ...post,
             }),
           });
         });
@@ -71,5 +70,71 @@ describe('retornoPublicacoes', () => {
     getDocs.mockImplementation(getDocsMock);
     const result = await retornoPublicacoes();
     expect(result).toEqual(mockPublicacoes);
+  });
+});
+
+describe('likePost', () => {
+  it('deve adicionar um like corretamente', async () => {
+    const mockCommentId = 'commentId';
+    const mockCommentDoc = {
+      data: jest.fn(() => ({
+        likeCount: 0,
+        likes: [],
+      })),
+    };
+    const mockAuthUid = 'authUid';
+    auth.currentUser.uid = mockAuthUid;
+    const mockUpdateDoc = jest.fn();
+    const mockArrayUnion = jest.fn();
+    const mockGetDoc = jest.fn(() => Promise.resolve(mockCommentDoc));
+
+    jest.mock('firebase/firestore', () => ({
+      doc: jest.fn(() => mockCommentDoc),
+      updateDoc: mockUpdateDoc,
+      arrayUnion: mockArrayUnion,
+      arrayRemove: jest.fn(),
+      getDoc: mockGetDoc,
+    }));
+
+    await likePost(mockCommentId, true);
+
+    expect(doc).toHaveBeenCalledWith(db, 'Post', mockCommentId);
+    expect(mockGetDoc).toHaveBeenCalledWith(mockCommentDoc);
+    expect(mockUpdateDoc).toHaveBeenCalledWith(mockCommentDoc, {
+      likes: mockArrayUnion(mockAuthUid),
+      likeCount: +1,
+    });
+  });
+
+  it('deve remover um like corretamente', async () => {
+    const mockCommentId = 'commentId';
+    const mockCommentDoc = {
+      data: jest.fn(() => ({
+        likeCount: -1,
+        likes: ['authUid'],
+      })),
+    };
+    const mockAuthUid = 'authUid';
+    auth.currentUser.uid = mockAuthUid;
+    const mockUpdateDoc = jest.fn();
+    const mockArrayRemove = jest.fn();
+    const mockGetDoc = jest.fn(() => Promise.resolve(mockCommentDoc));
+
+    jest.mock('firebase/firestore', () => ({
+      doc: jest.fn(() => mockCommentDoc),
+      updateDoc: mockUpdateDoc,
+      arrayUnion: jest.fn(),
+      arrayRemove: mockArrayRemove,
+      getDoc: mockGetDoc,
+    }));
+
+    await likePost(mockCommentId, false);
+
+    expect(doc).toHaveBeenCalledWith(db, 'Post', mockCommentId);
+    expect(mockGetDoc).toHaveBeenCalledWith(mockCommentDoc);
+    expect(mockUpdateDoc).toHaveBeenCalledWith(mockCommentDoc, {
+      likes: mockArrayRemove(mockAuthUid),
+      likeCount: 0,
+    });
   });
 });
