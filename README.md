@@ -1,53 +1,51 @@
-# Criando uma Rede Social
+# Social Network - Coffee Station
 
 ## Índice
 
-* [1. Prefácio](#1-prefácio)
+* [1. Desenvolvedoras](#1-desenvolvedoras)
 * [2. Resumo do projeto](#2-resumo-do-projeto)
-* [3. Objetivos de aprendizagem](#3-objetivos-de-aprendizagem)
-* [4. Considerações gerais](#4-considerações-gerais)
-* [5. Critérios de aceitação mínimos do
-  projeto](#5-criterios-de-aceitação-mínimos-do-projeto)
-* [6. Hacker edition](#6-hacker-edition)
+* [3. Prefácio](#3-prefácio)
+* [4. 4. Protótipos](#4-protótipos)
+* [5. Objetivos de aprendizagem](#5-objetivos-de-aprendizagem)
 * [7. Entrega](#7-entrega)
 * [8. Guias, dicas e leituras
   complementares](#8-guias-dicas-e-leituras-complementares)
 
 ***
 
-## 1. Prefácio
+## 1. Desenvolvedoras
 
-Instagram, Snapchat, Twitter, Facebook, Twitch, Linkedin, etc. As redes sociais
-invadiram nossas vidas. Nós as amamos ou odiamos, e muitas pessoas não conseguem
-viver sem elas.
+Projeto desenvolvido por:
 
-![adem-ay-Tk9m_HP4rgQ-unsplash](https://user-images.githubusercontent.com/110297/135544666-4efa54f1-4ff6-4c4c-b398-6df04ef56117.jpg)
-
-Há redes sociais de todo tipo para todos os tipos de interesse. Por exemplo: em
-uma rodada de financiamento com investidores, foi apresentada uma rede social
-para químicos onde os usuários podem publicar artigos a respeito de suas
-pesquisas, comentar os artigos de seus colegas e filtrar artigos de acordo com
-determinadas tags ou popularidade, mais recente ou mais comentado.
+Aline Ferreira [LinkedIn](link-linkedin) | [GitHub](link-github)
+Josielen Rubin [LinkedIn](link-linkedin) | [GitHub](link-github)
+Nara Alice Brando [LinkedIn](link-linkedin) | [GitHub](link-github)
 
 ## 2. Resumo do projeto
 
-Neste projeto você construirá uma Rede Social sobre o que você e sua equipe
-decidirem. Pode ser, por exemplo, sobre alimentação saudável, feminismo,
-educação, saúde, energias renováveis, amantes das
-[Empanadas](https://pt.wikipedia.org/wiki/Empanada), de
-[Tacos](https://pt.wikipedia.org/wiki/Taco_(culin%C3%A1ria)), de
-[Feijoada](https://pt.wikipedia.org/wiki/Feijoada), ou do que seja.
+Terceiro projeto proposto no bootcamp da Laboratória (turma SAP010). O objetivo era criar uma rede social na qual os usuários pudessem se registrar, logar, criar, dar _like_ e _deslike_ em publicações, além de poder excluir e editar suas próprias publicações. O projeto foi contruído em SPA e foi pensado utilizando o método _mobile first_. 
 
-Sua Rede Social terá que permitir à qualquer usuário criar uma conta de acesso,
-logar-se com ela, criar, editar, deletar e dar _likes_ em publicações.
+## 3. Prefácio
 
-O objetivo principal de aprendizagem deste projeto é construir uma [Single-page
-Application
-(SPA)](https://pt.wikipedia.org/wiki/Aplicativo_de_p%C3%A1gina_%C3%BAnica)
-[_responsiva_](https://curriculum.laboratoria.la/pt/topics/css/02-responsive) (com mais de uma tela/ página) na
-qual seja possível **ler e escrever dados**.
+A Coffee Station foi pensada para profissionais da indústria do café, desde o agricultor até o empresário da cafeteria. Criada para criar essa conexão entre os profissionais para que possam compartilhar experiências e valores e para que possam criar laços e fortalecer ainda mais essa área que é imensa no Brasil.
 
-## 3. Objetivos de aprendizagem
+## 4. Protótipos
+
+**Login**
+
+Baixa fidelidade:
+
+
+Alta fidelidade:
+[alta-fidelidade-login](./src/images/prototipo-alta-login-mobile.png)
+[alta-fidelidade-login](./src/images/prototipo-alta-login.png)
+
+
+**Feed**
+[alta-fidelidade-feed](./src/images/prototipo-alta-feed-mobile.png)
+[alta-fidelidade-feed](./src/images/prototipo-alta-feed.png)
+
+<!-- ## 5. Objetivos de aprendizagem
 
 Reflita e depois enumere os objetivos que quer alcançar e aplique no seu projeto. Pense nisso para decidir sua estratégia de trabalho.
 
@@ -551,4 +549,4 @@ Outras:
 * [Módulos:
   Export](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Statements/export)
 * [Módulos:
-  Import](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Sentencias/import)
+  Import](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Sentencias/import) -->
