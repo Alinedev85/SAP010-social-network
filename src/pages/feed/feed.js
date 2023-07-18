@@ -15,13 +15,16 @@ import {
 
 import { auth } from '../../configFirebase/configFirebase.js';
 
+import logoFeed from '../../images/logo5.png';
+import fundoFiltros from '../../images/background-filtros.png';
+
 export default () => {
   const container = document.createElement('div');
 
   const template = `
   <div class="container">
     <div class="logo">
-      <img src="./images/logo5.png">
+      <img src="${logoFeed}">
     </div>
 
     <section class="menu">
@@ -40,7 +43,7 @@ export default () => {
         <li><a href="https://app.powerbi.com/view?r=eyJrIjoiNDdkNDM4ZjctYzk0OS00NWVjLWFlYjktZWQ4Njg3MDEyMTg0IiwidCI6ImU2ZDkwZGYzLWYxOGItNGJkZC04MDhjLWFhNmQwZjY4YjgwOSJ9" target="_blank">Busca por Armazenadores</a></li>
         <li><a href="https://portaldeinformacoes.conab.gov.br/produtos-360.html" target="_blank">Acompanhe o preço da saca</a></li>
       </ul>
-      <img class="fundo" src="./images/background-filtros.png">
+      <img class="fundo" src="${fundoFiltros}">
     </section>
 
     <div class="postagens">

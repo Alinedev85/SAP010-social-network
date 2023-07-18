@@ -4,13 +4,18 @@ import {
   loginGoogle,
 } from '../../configFirebase/auth';
 
+import logoInicio from '../../images/logo1.png';
+import backgroundInicio from '../../images/background-desktop.png';
+import logoGoogle from '../../images/logo4.png';
+import eyeOff from '../../images/icons/eye-off.svg';
+
 export default () => {
   const container = document.createElement('div');
 
   const template = `
   <div class="imagens">
-    <img class="logo-cs" src="./images/logo1.png">
-    <img class="imagem-fundo" src="./images/background-desktop.png">
+    <img class="logo-cs" src="${logoInicio}">
+    <img class="imagem-fundo" src="${backgroundInicio}">
   </div>
     <fieldset>
       <h2>Entre com</h2>
@@ -19,18 +24,15 @@ export default () => {
       <input type="email" id="email" placeholder="Digite seu e-mail">
       <label for="senha">Senha</label>
       <input type="password" id="senha" placeholder="Digite sua senha">
-      <img class="eye" id="eyeToggle" src="./images/icons/eye-off.svg">
+      <img class="eye" id="eyeToggle" src="${eyeOff}">
       <div id="errorMessage" class="error">
-      </div>
-      <a href="">Esqueceu a senha? Clique aqui!</a>
-      </div>
         <div class="botoes">
         <button id="entrarButton">Entrar</button>
         <button id="registrarButton">Registrar</button></div>
           </div>
           <h3>-- ou --</h3>
         <div class="google">
-        <button id="googleLoginButton">Acesse com sua conta <img class="logo-google" src="./images/logo4.png"></button>
+        <button id="googleLoginButton">Acesse com sua conta <img class="logo-google" src="${logoGoogle}"></button>
        </div>
       
        <footer> Desenvolvedoras: Aline Ferreira, Josi Corrêa e Nara Monteiro </footer>
