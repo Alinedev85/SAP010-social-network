@@ -25,7 +25,7 @@ describe('loginGoogle', () => {
 
   it('deverá lidar com erros ao fazer login com a conta do Google', async () => {
     const errorMessage = 'Erro ao fazer login com a conta do Google';
-    signInWithPopup.mockRejectedValueOnce(new Error(errorMessage));
+    signInWithPopup.toBe(new Error(errorMessage));
     try {
       await loginGoogle();
       throw new Error('A função deveria lançar um erro');
@@ -59,7 +59,7 @@ describe('loginWithEmail', () => {
   });
 });
 
-// mock da função getAppAuth
+// Mock da função getAppAuth
 jest.mock('../src/configFirebase/auth', () => ({
   ...jest.requireActual('../src/configFirebase/auth'),
   getAppAuth: jest.fn(),
@@ -70,28 +70,26 @@ describe('createUserWithEmail', () => {
     const name = 'Jose cafeina';
     const email = 'Jose@cafeina.com';
     const senha = '123456';
-    const errorMessage = 'E-mail já está em uso';
+    const userCredentialMock = jest.fn().mockRejectedValueOnce({ code: 'auth/email-already-in-use' });
+    const updateProfileMock = jest.fn();
     const authMock = {
-      createUserWithEmailAndPassword: jest.fn().mockRejectedValueOnce({ message: errorMessage }),
-      updateProfile: jest.fn(),
+      createUserWithEmailAndPassword: userCredentialMock,
+      updateProfile: updateProfileMock,
+      currentUser: {},
     };
+
     getAppAuth.mockReturnValue(authMock);
-    // moockda janela
-    global.window = {
-      location: {
-        hash: '',
-      },
-    };
+
     try {
       await createUserWithEmail(name, email, senha);
+      throw new Error('A função deveria lançar um erro');
     } catch (error) {
-      expect(errorMessage.textContent).toHaveBeenCalledWith(errorMessage);
+      expect(error.code).toBe('auth/email-already-in-use');
     }
-    expect(getAppAuth).toHaveBeenCalledTimes(0);
-    expect(authMock.createUserWithEmailAndPassword).toHaveBeenCalledWith(email, senha);
-    expect(authMock.updateProfile).toHaveBeenCalledWith(authMock.currentUser, {
-      displayName: `${name}`,
+    expect(getAppAuth).toHaveBeenCalledTimes(1);
+    expect(userCredentialMock).toHaveBeenCalledWith(authMock, email, senha);
+    expect(updateProfileMock).toHaveBeenCalledWith(authMock.currentUser, {
+      displayName: name,
     });
-    expect(window.location.hash).toBe('');
   });
 });
