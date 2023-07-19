@@ -1,19 +1,19 @@
 # Social Network - Coffee Station
 
-## Índice
+## Índice 📌
 
 * [1. Desenvolvedoras](#1-desenvolvedoras)
 * [2. Resumo do projeto](#2-resumo-do-projeto)
 * [3. Prefácio](#3-prefácio)
-* [4. 4. Protótipos](#4-protótipos)
-* [5. Objetivos de aprendizagem](#5-objetivos-de-aprendizagem)
-* [7. Entrega](#7-entrega)
+* [4. Protótipos](#4-protótipos)
+* [5. Documentação de cores e fontes](#5-documentação-de-cores-e-fontes)
+* [6. Histórias de Usuários](#6-histórias-de-usuários)
 * [8. Guias, dicas e leituras
   complementares](#8-guias-dicas-e-leituras-complementares)
 
 ***
 
-## 1. Desenvolvedoras
+## 1. Desenvolvedoras 💻
 
 Projeto desenvolvido por:
 
@@ -21,20 +21,21 @@ Projeto desenvolvido por:
 * Josielen Rubin [LinkedIn](link-linkedin) | [GitHub](link-github)
 * Nara Alice Brando [LinkedIn](link-linkedin) | [GitHub](link-github)
 
-## 2. Resumo do projeto
+## 2. Resumo do projeto 📚
 
 Terceiro projeto proposto no bootcamp da Laboratória (turma SAP010). O objetivo era criar uma rede social na qual os usuários pudessem se registrar, logar, criar, dar _like_ e _deslike_ em publicações, além de poder excluir e editar suas próprias publicações. O projeto foi contruído em SPA e foi pensado utilizando o método _mobile first_. 
 
-## 3. Prefácio
+## 3. Prefácio ✏️
 
 A Coffee Station foi pensada para profissionais da indústria do café, desde o agricultor até o empresário da cafeteria. Criada para criar essa conexão entre os profissionais para que possam compartilhar experiências e valores e para que possam criar laços e fortalecer ainda mais essa área que é imensa no Brasil.
 
-## 4. Protótipos
+## 4. Protótipos 📐
 
 **Login**
 
 Baixa fidelidade:
 
+![baixa-fidelidade-login](./src/images/prototipo-baixa-fidelidade-login.png)
 
 Alta fidelidade:
 
@@ -47,6 +48,14 @@ Alta fidelidade:
 
 ![feed-mobile](./src/images/prototipo-alta-feed-mobile.png)
 ![alta-fidelidade-feed][./src/images/prototipo-alta-fidelidade.png]
+
+## 5. Documentação de cores e fontes 🖌
+
+As cores e fontes do projeto foram pensadas e combinadas para passar uma sensação de formalidade informal, como a rede social é pensada para o ramo empresarial, nós escolhemos uma paleta de cores mais neutra e ao mesmo tempo que remetesse ao café e, a escolha das fontes _sans-serif_ trazem esse ar de informalidade mas mantem a seriedade por não ser tão desenhada. Abaixo a documentação:
+
+![id-visual](./src/images/id-visual.png)
+
+## 6. Histórias de usuário 🖱
 
 <!-- ## 5. Objetivos de aprendizagem
 
