@@ -41,12 +41,6 @@
   margin: 0;
 }
 
-ul {
-  list-style-image: url('../../images/saco-de-cafe.png');
-  width: 300px;
-  margin-left: 50px;
-}
-
 ul, li{
   width: fit-content;
 }
