@@ -17,9 +17,9 @@
 
 Projeto desenvolvido por:
 
-* Aline Ferreira [LinkedIn](link-linkedin) | [GitHub](link-github)
-* Josielen Rubin [LinkedIn](link-linkedin) | [GitHub](link-github)
-* Nara Alice Brando [LinkedIn](link-linkedin) | [GitHub](link-github)
+* Aline Ferreira [LinkedIn](link-linkedin) | [GitHub](https://github.com/Alinedev85)
+* Josielen Rubin [LinkedIn](https://www.linkedin.com/in/josielen-rubin-corr%C3%AAa/) | [GitHub](https://github.com/josirubin)
+* Nara Alice Branco [LinkedIn](link-linkedin) | [GitHub](https://github.com/narabranco)
 
 ## 2. Resumo do projeto 📚
 
